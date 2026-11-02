@@ -236,7 +236,7 @@ const JOBS = [
 
 function Experience() {
   const [sel, setSel] = useState(0);
-  const j = JOBS[sel];
+  const j = JOBS[sel]!;
   return (
     <section id="experience" className="relative overflow-hidden bg-navy text-navy-foreground">
       <div className="grid-lines absolute inset-0" />

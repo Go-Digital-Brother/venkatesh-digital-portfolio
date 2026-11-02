@@ -39,7 +39,7 @@ export default function ResultsCharts() {
       </div>
       <div className="rounded-3xl glass p-6 lg:col-span-5">
         <p className="text-xs uppercase tracking-[0.2em] text-accent">Channel mix</p>
-        <p className="font-heading text-xl font-bold">{MIX[active].n} · {MIX[active].v}%</p>
+        <p className="font-heading text-xl font-bold">{MIX[active]!.n} · {MIX[active]!.v}%</p>
         <div className="h-52">
           <ResponsiveContainer>
             <PieChart>
