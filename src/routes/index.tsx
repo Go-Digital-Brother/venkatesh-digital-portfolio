@@ -172,28 +172,45 @@ function Hero() {
   );
 }
 
-function SectionHead({ k, title, dark }: { k: string; title: string; dark?: boolean }) {
+function SectionHead({ k, title, dark, n }: { k: string; title: string; dark?: boolean; n?: string }) {
   return (
-    <div className="reveal mb-12 max-w-2xl">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-accent">{k}</p>
-      <h2 className={`font-heading text-3xl font-extrabold md:text-5xl ${dark ? "text-navy-foreground" : "text-navy"}`}>{title}</h2>
+    <div className="reveal relative mb-14 max-w-3xl">
+      {n && <span aria-hidden className={`pointer-events-none absolute -top-16 right-0 select-none md:-right-24 font-heading text-[8rem] font-extrabold leading-none ${dark ? "text-navy-foreground/5" : "text-outline"}`}>{n}</span>}
+      <p className="relative mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-accent"><span className="h-px w-10 bg-brand" />{k}</p>
+      <h2 className={`relative font-heading text-3xl font-extrabold md:text-5xl ${dark ? "text-navy-foreground" : "text-navy"}`}>{title}</h2>
     </div>
   );
 }
 
 function About() {
-  const areas = ["Performance Marketing", "SEO, AEO & GEO", "Lead Generation", "Integrated Marketing Plans", "KPI Analysis", "Multi-brand Campaigns"];
+  const areas = [[Target, "Performance Marketing"], [Search, "SEO, AEO & GEO"], [Users, "Lead Generation"], [Compass, "Integrated Marketing Plans"], [BarChart3, "KPI Analysis"], [Share2, "Multi-brand Campaigns"]] as const;
   return (
     <section id="about" className="mx-auto max-w-7xl px-6 py-28">
-      <SectionHead k="About Me" title="Practical, customer-focused, data-driven." />
-      <div className="grid gap-12 lg:grid-cols-2">
-        <div className="reveal space-y-5 text-lg leading-relaxed">
-          <p>Results-driven Digital Marketing professional with over 9 years of experience in digital strategy, performance marketing, SEO, SEM, lead generation, GEO and AEO.</p>
-          <p className="text-muted-foreground">I build integrated marketing plans, optimise campaigns through KPI analysis and coordinate cross-functional teams. My journey runs from hands-on ad operations and SEO to managing multi-brand initiatives across healthcare, technology and B2B/B2C sectors.</p>
-          <p className="text-muted-foreground">My philosophy is simple: understand the business first, let data guide decisions, and keep improving until the numbers move.</p>
+      <SectionHead n="01" k="About Me" title="Practical, customer-focused, data-driven." />
+      <div className="grid gap-5 lg:grid-cols-12">
+        <div className="reveal relative overflow-hidden rounded-3xl bg-hero p-8 text-navy-foreground lg:col-span-5 lg:row-span-2">
+          <div className="grid-lines absolute inset-0" />
+          <img src={portrait} alt="" loading="lazy" className="relative mx-auto h-80 w-auto object-contain [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
+          <div className="relative -mt-6">
+            <p className="font-heading text-2xl font-bold">Venkatesh Kuppili</p>
+            <p className="text-sm text-navy-foreground/70">Digital Marketing Strategist · Hyderabad</p>
+            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+              {[["9+", "Years"], ["5", "Companies"], ["10+", "Campaigns"]].map(([n, l]) => <div key={l} className="rounded-xl glass p-3"><div className="font-heading text-xl font-extrabold text-brand">{n}</div><div className="text-[11px] text-navy-foreground/60">{l}</div></div>)}
+            </div>
+          </div>
         </div>
-        <div className="reveal grid grid-cols-2 gap-3">
-          {areas.map((a) => <div key={a} className="rounded-2xl border bg-card p-5 font-heading font-semibold text-navy shadow-elegant transition hover:-translate-y-1 hover:border-primary">{a}</div>)}
+        <div className="reveal rounded-3xl border bg-card p-8 shadow-elegant lg:col-span-7">
+          <p className="font-heading text-2xl font-semibold leading-snug text-navy">Results-driven Digital Marketing professional with over <span className="text-brand">9 years</span> of experience in digital strategy, performance marketing, SEO, SEM, lead generation, GEO and AEO.</p>
+          <p className="mt-5 text-muted-foreground">I build integrated marketing plans, optimise campaigns through KPI analysis and coordinate cross-functional teams — from hands-on ad operations and SEO to multi-brand initiatives across healthcare, technology and B2B/B2C sectors.</p>
+          <blockquote className="mt-6 border-l-2 border-accent pl-4 italic text-navy">"Understand the business first, let data guide decisions, and keep improving until the numbers move."</blockquote>
+        </div>
+        <div className="reveal grid grid-cols-2 gap-3 sm:grid-cols-3 lg:col-span-7">
+          {areas.map(([I, a]) => (
+            <div key={a} className="ring-brand group rounded-2xl border bg-card p-5 transition hover:-translate-y-1 hover:shadow-elegant">
+              <I className="size-5 text-primary transition group-hover:text-accent" />
+              <p className="mt-3 font-heading text-sm font-bold text-navy">{a}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -210,19 +227,27 @@ const JOBS = [
 
 function Experience() {
   return (
-    <section id="experience" className="bg-navy text-navy-foreground">
-      <div className="mx-auto max-w-5xl px-6 py-28">
-        <SectionHead k="Experience" title="A career built on measurable results." dark />
-        <ol className="relative border-l border-navy-foreground/15 pl-8">
-          {JOBS.map((j) => (
-            <li key={j.c} className="reveal relative mb-12 last:mb-0">
-              <span className="absolute -left-[41px] top-1 size-4 rounded-full bg-brand ring-4 ring-navy" />
-              <p className="text-xs uppercase tracking-[0.2em] text-accent">{j.d}</p>
-              <h3 className="mt-1 font-heading text-xl font-bold">{j.r}</h3>
-              <p className="text-navy-foreground/70">{j.c}</p>
-              <ul className="mt-4 grid gap-2 text-sm text-navy-foreground/75 md:grid-cols-2">
-                {j.b.map((x) => <li key={x} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />{x}</li>)}
-              </ul>
+    <section id="experience" className="relative overflow-hidden bg-navy text-navy-foreground">
+      <div className="grid-lines absolute inset-0" />
+      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-[1fr_1.6fr]">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <SectionHead n="02" k="Experience" title="A career built on measurable results." dark />
+          <p className="reveal max-w-sm text-navy-foreground/70">From analyst to Assistant Manager — nine years across agencies, B2B technology and healthcare.</p>
+          <Button asChild variant="glass" size="lg" className="mt-8"><a href={RESUME} download>Download Resume <Download /></a></Button>
+        </div>
+        <ol className="relative space-y-5 before:absolute before:left-[19px] before:top-2 before:h-full before:w-px before:bg-brand before:opacity-40">
+          {JOBS.map((j, i) => (
+            <li key={j.c} className="reveal relative pl-14">
+              <span className={`absolute left-0 top-6 grid size-10 place-items-center rounded-full font-heading text-xs font-bold ${i === 0 ? "bg-brand shadow-glow" : "glass"}`}>{String(JOBS.length - i).padStart(2, "0")}</span>
+              <div className="ring-brand rounded-2xl glass p-6 transition hover:-translate-y-0.5">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div><h3 className="font-heading text-xl font-bold">{j.r}</h3><p className="text-navy-foreground/70">{j.c}</p></div>
+                  <span className="rounded-full bg-navy-foreground/10 px-3 py-1 text-xs text-accent">{j.d}</span>
+                </div>
+                <ul className="mt-4 grid gap-2 text-sm text-navy-foreground/75 md:grid-cols-2">
+                  {j.b.map((x) => <li key={x} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />{x}</li>)}
+                </ul>
+              </div>
             </li>
           ))}
         </ol>
@@ -242,15 +267,25 @@ const SKILLS = [
 function Skills() {
   return (
     <section id="skills" className="mx-auto max-w-7xl px-6 py-28">
-      <SectionHead k="Skills & Expertise" title="Full-funnel marketing capability." />
+      <SectionHead n="03" k="Skills & Expertise" title="Full-funnel marketing capability." />
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {SKILLS.map((k) => (
-          <div key={k.t} className="reveal group rounded-3xl border bg-card p-7 shadow-elegant transition hover:-translate-y-1 hover:border-primary">
-            <span className="grid size-12 place-items-center rounded-2xl bg-brand text-primary-foreground"><k.i /></span>
-            <h3 className="mt-5 font-heading text-xl font-bold text-navy">{k.t}</h3>
-            <div className="mt-4 flex flex-wrap gap-2">{k.s.map((x) => <span key={x} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{x}</span>)}</div>
-          </div>
-        ))}
+        {SKILLS.map((k, i) => {
+          const big = i === 0;
+          return (
+            <div key={k.t} className={`reveal ring-brand group relative overflow-hidden rounded-3xl p-7 transition hover:-translate-y-1 ${big ? "bg-hero text-navy-foreground lg:row-span-2" : "border bg-card shadow-elegant"}`}>
+              {big && <div className="grid-lines absolute inset-0" />}
+              <div className="relative">
+                <div className="flex items-center justify-between">
+                  <span className="grid size-12 place-items-center rounded-2xl bg-brand text-primary-foreground transition group-hover:rotate-6"><k.i /></span>
+                  <span className={`font-heading text-sm font-bold ${big ? "text-navy-foreground/40" : "text-muted-foreground"}`}>0{i + 1}</span>
+                </div>
+                <h3 className={`mt-6 font-heading font-bold ${big ? "text-3xl" : "text-xl text-navy"}`}>{k.t}</h3>
+                {big && <p className="mt-3 text-navy-foreground/70">Google Ads budgets up to ₹10 lakh monthly, generating 1,000+ leads every month.</p>}
+                <div className={`mt-5 flex flex-wrap gap-2 ${big ? "lg:mt-24" : ""}`}>{k.s.map((x) => <span key={x} className={`rounded-full px-3 py-1 text-xs ${big ? "glass" : "bg-secondary text-secondary-foreground"}`}>{x}</span>)}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -272,14 +307,19 @@ function Services() {
   return (
     <section id="services" className="bg-secondary">
       <div className="mx-auto max-w-7xl px-6 py-28">
-        <SectionHead k="Services" title="How I can help your business grow." />
+        <SectionHead n="04" k="Services" title="How I can help your business grow." />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s) => (
-            <div key={s.t} className="reveal group rounded-2xl bg-card p-6 transition hover:shadow-elegant">
-              <s.i className="size-7 text-primary transition group-hover:text-accent" />
-              <h3 className="mt-4 font-heading font-bold text-navy">{s.t}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
-            </div>
+          {SERVICES.map((s, i) => (
+            <a href="#contact" key={s.t} className="reveal ring-brand group relative flex flex-col overflow-hidden rounded-3xl bg-card p-7 transition hover:-translate-y-1 hover:shadow-elegant">
+              <span className="absolute -right-10 -top-10 size-32 rounded-full bg-brand opacity-0 blur-2xl transition group-hover:opacity-30" />
+              <div className="flex items-center justify-between">
+                <span className="grid size-12 place-items-center rounded-2xl bg-secondary text-primary transition group-hover:bg-brand group-hover:text-primary-foreground"><s.i className="size-5" /></span>
+                <span className="font-heading text-xs font-bold text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 className="mt-6 font-heading text-lg font-bold text-navy">{s.t}</h3>
+              <p className="mt-2 flex-1 text-sm text-muted-foreground">{s.d}</p>
+              <span className="mt-5 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.15em] text-primary opacity-0 transition group-hover:opacity-100">Enquire <ArrowUpRight className="size-3.5" /></span>
+            </a>
           ))}
         </div>
       </div>
@@ -299,10 +339,10 @@ function Work() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="work" className="mx-auto max-w-7xl px-6 py-28">
-      <SectionHead k="Featured Work" title="Case studies & projects." />
+      <SectionHead n="05" k="Featured Work" title="Case studies & projects." />
       <div className="grid gap-4">
         {PROJECTS.map((p, i) => (
-          <div key={p.t} className={`reveal overflow-hidden rounded-3xl border transition ${open === i ? "bg-navy text-navy-foreground" : "bg-card hover:border-primary"}`}>
+          <div key={p.t} className={`reveal ring-brand overflow-hidden rounded-3xl border transition ${open === i ? "bg-hero text-navy-foreground shadow-elegant" : "bg-card hover:-translate-y-0.5"}`}>
             <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center gap-6 p-6 text-left md:p-8" aria-expanded={open === i}>
               <span className="font-heading text-3xl font-extrabold text-brand">0{i + 1}</span>
               <div className="flex-1">
@@ -339,10 +379,10 @@ function Approach() {
   return (
     <section className="bg-hero text-navy-foreground">
       <div className="mx-auto max-w-7xl px-6 py-28">
-        <SectionHead k="My Marketing Approach" title="Five steps from insight to growth." dark />
-        <div className="grid gap-4 md:grid-cols-5">
+        <SectionHead n="06" k="My Marketing Approach" title="Five steps from insight to growth." dark />
+        <div className="relative grid gap-4 md:grid-cols-5 md:before:absolute md:before:left-0 md:before:right-0 md:before:top-12 md:before:h-px md:before:bg-brand md:before:opacity-50">
           {STEPS.map(([t, d], i) => (
-            <div key={t} className="reveal relative rounded-2xl glass p-6" style={{ transitionDelay: `${i * 0.1}s` }}>
+            <div key={t} className="reveal ring-brand relative rounded-2xl glass p-6 transition hover:-translate-y-1" style={{ transitionDelay: `${i * 0.1}s` }}>
               <span className="font-heading text-5xl font-extrabold text-brand">{i + 1}</span>
               <h3 className="mt-3 font-heading text-lg font-bold">{t}</h3>
               <p className="mt-2 text-sm text-navy-foreground/70">{d}</p>
@@ -391,7 +431,7 @@ function Contact() {
     <section id="contact" className="bg-navy-deep text-navy-foreground">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-2">
         <div>
-          <SectionHead k="Contact" title="Let's Discuss Your Next Digital Growth Opportunity." dark />
+          <SectionHead n="07" k="Contact" title="Let's Discuss Your Next Digital Growth Opportunity." dark />
           <div className="reveal grid gap-3">
             {links.map((x) => {
               const inner = <><span className="grid size-10 place-items-center rounded-xl bg-brand"><x.i className="size-4" /></span>{x.l}</>;
