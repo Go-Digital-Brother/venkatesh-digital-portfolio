@@ -1,24 +1,425 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState, type FormEvent } from "react";
+import {
+  ArrowUpRight, Download, Mail, Phone, MapPin, MessageCircle, Linkedin, Target, Search, Share2,
+  BarChart3, Users, Compass, FileSearch, Megaphone, MousePointerClick, CalendarDays, LayoutTemplate,
+  LineChart, GraduationCap, ChevronDown, Sparkles, Menu, X,
+} from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import portrait from "@/assets/venkatesh-cutout.png";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+const EMAIL = "kuppili.venkat@gmail.com";
+const PHONE = "+918790009840";
+const RESUME = "/venkatesh-kuppili-resume.pdf";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Venkatesh Kuppili — Digital Marketing Strategist | SEO, AEO, GEO" },
+      { name: "description", content: "Digital Marketing Strategist with 9+ years in performance marketing, SEO, AEO, GEO and lead generation. Based in Hyderabad, India." },
+      { property: "og:title", content: "Venkatesh Kuppili — Digital Marketing Strategist" },
+      { property: "og:description", content: "Turning digital marketing strategies into measurable business growth." },
+      { property: "og:type", content: "profile" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org", "@type": "Person", name: "Venkatesh Kuppili",
+        jobTitle: "Digital Marketing Strategist", email: `mailto:${EMAIL}`, telephone: "+91 8790009840",
+        address: { "@type": "PostalAddress", addressLocality: "Hyderabad", addressCountry: "IN" },
+        alumniOf: "Sasi Institute of Technology & Engineering",
+        knowsAbout: ["Performance Marketing", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation"],
+      }),
+    }],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const NAV = [["About", "about"], ["Experience", "experience"], ["Skills", "skills"], ["Services", "services"], ["Work", "work"], ["Contact", "contact"]];
+
+function useReveal() {
+  useEffect(() => {
+    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")), { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
 function Index() {
+  useReveal();
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Services />
+        <Work />
+        <Approach />
+        <Education />
+        <Contact />
+      </main>
+      <Footer />
     </div>
+  );
+}
+
+function Header() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const f = () => setScrolled(window.scrollY > 40);
+    f(); window.addEventListener("scroll", f); return () => window.removeEventListener("scroll", f);
+  }, []);
+  return (
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all ${scrolled ? "bg-navy-deep/85 backdrop-blur-xl py-3" : "py-5"}`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
+        <a href="#top" className="font-heading text-xl font-extrabold text-navy-foreground">venkatesh<span className="text-accent">.</span></a>
+        <nav className="hidden items-center gap-1 md:flex">
+          {NAV.map(([l, id], i) => (
+            <a key={id} href={`#${id}`} className="group flex items-center gap-3 px-3 text-xs font-medium uppercase tracking-[0.18em] text-navy-foreground/70 transition hover:text-navy-foreground">
+              {i > 0 && <span className="size-1 bg-navy-foreground/40" />}{l}
+            </a>
+          ))}
+        </nav>
+        <Button asChild variant="hero" size="sm" className="hidden md:inline-flex"><a href="#contact">Let's Connect</a></Button>
+        <button aria-label="Menu" onClick={() => setOpen(!open)} className="text-navy-foreground md:hidden">{open ? <X /> : <Menu />}</button>
+      </div>
+      {open && (
+        <nav className="mx-6 mt-3 grid gap-1 rounded-2xl bg-navy-deep p-4 md:hidden">
+          {NAV.map(([l, id]) => <a key={id} onClick={() => setOpen(false)} href={`#${id}`} className="rounded-lg px-3 py-2 text-navy-foreground/80 hover:bg-navy">{l}</a>)}
+        </nav>
+      )}
+    </header>
+  );
+}
+
+const METRICS = [["9+", "Years of Experience"], ["1,000+", "Monthly Leads"], ["32%", "Increase in Qualified Leads"], ["17%", "Reduction in CPL"]];
+const RIBBON = ["Performance Marketing", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation", "Analytics"];
+const ORBIT = [
+  { icon: Target, t: "Google Ads", s: "Up to ₹10L / mo" },
+  { icon: Search, t: "SEO · AEO · GEO", s: "Search visibility" },
+  { icon: Users, t: "Lead Gen", s: "1,000+ monthly" },
+  { icon: LineChart, t: "Qualified Leads", s: "+32%" },
+  { icon: BarChart3, t: "Cost per Lead", s: "−17%" },
+  { icon: Share2, t: "Social", s: "8 brands managed" },
+];
+
+function Hero() {
+  return (
+    <section id="top" className="relative isolate overflow-hidden bg-hero text-navy-foreground">
+      <div className="grid-lines absolute inset-0 -z-10" />
+      <div className="mx-auto grid min-h-screen max-w-7xl items-center gap-8 px-6 pb-40 pt-32 lg:grid-cols-[1.15fr_1fr] lg:pb-32">
+        <div className="relative z-10">
+          <p className="animate-rise mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.2em]">
+            <span className="size-2 animate-pulse rounded-full bg-accent" /> Venkatesh Kuppili · Hyderabad
+          </p>
+          <h1 className="animate-rise font-heading text-[clamp(2.6rem,7vw,6.2rem)] font-extrabold uppercase leading-[0.92]" style={{ animationDelay: ".1s" }}>
+            <span className="block pl-[12%]">Strategy that</span>
+            <span className="flex justify-between"><span>Drives</span><span className="text-brand">Growth.</span></span>
+          </h1>
+          <p className="animate-rise mt-6 font-heading text-lg font-semibold text-navy-foreground/90 md:text-xl" style={{ animationDelay: ".2s" }}>
+            Building Digital Growth Through Strategy, Performance & Innovation.
+          </p>
+          <p className="animate-rise mt-4 max-w-lg text-sm uppercase leading-relaxed tracking-wide text-navy-foreground/60" style={{ animationDelay: ".3s" }}>
+            Digital Marketing Strategist · Performance Marketing · SEO · AEO · GEO — 9+ years turning campaigns into measurable business results.
+          </p>
+          <div className="animate-rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: ".4s" }}>
+            <Button asChild variant="hero" size="lg"><a href="#work">View My Portfolio <ArrowUpRight /></a></Button>
+            <Button asChild variant="glass" size="lg"><a href={RESUME} download>Download Resume <Download /></a></Button>
+            <Button asChild variant="ghostLight" size="lg"><a href="#contact">[ Let's Connect ]</a></Button>
+          </div>
+          <div className="animate-rise mt-12 grid max-w-xl grid-cols-2 gap-px overflow-hidden rounded-2xl glass sm:grid-cols-4" style={{ animationDelay: ".5s" }}>
+            {METRICS.map(([n, l]) => (
+              <div key={l} className="bg-navy-deep/40 p-4">
+                <div className="font-heading text-2xl font-extrabold text-brand">{n}</div>
+                <div className="mt-1 text-[11px] leading-tight text-navy-foreground/60">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-md lg:max-w-none">
+          <div className="absolute left-1/2 top-[45%] size-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand opacity-40 blur-3xl" />
+          <div className="absolute left-1/2 top-[45%] size-[95%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-navy-foreground/10" />
+          <div className="animate-orbit absolute left-1/2 top-[45%] size-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/30" />
+          <img src={portrait} alt="Venkatesh Kuppili, Digital Marketing Strategist" className="relative z-10 mx-auto h-full w-auto object-contain object-bottom drop-shadow-2xl [mask-image:linear-gradient(to_bottom,black_75%,transparent)]" />
+          {ORBIT.map((o, i) => {
+            const pos = ["left-0 top-[12%]", "right-0 top-[6%]", "-left-4 top-[48%]", "right-[-1rem] top-[40%]", "left-[4%] bottom-[14%]", "right-[2%] bottom-[20%]"][i];
+            return (
+              <div key={o.t} className={`animate-float absolute z-20 hidden items-center gap-3 rounded-xl glass px-3 py-2 shadow-elegant sm:flex ${pos}`} style={{ animationDelay: `${i * 0.7}s` }}>
+                <span className="grid size-8 place-items-center rounded-lg bg-brand"><o.icon className="size-4" /></span>
+                <div><div className="text-xs font-semibold">{o.t}</div><div className="text-[11px] text-navy-foreground/60">{o.s}</div></div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="absolute -left-10 -right-10 bottom-14 -rotate-3 border-y border-navy-foreground/15 bg-navy-foreground py-3 text-navy">
+        <div className="animate-marquee flex w-max gap-8 whitespace-nowrap font-heading text-sm font-bold uppercase tracking-[0.2em]">
+          {[...RIBBON, ...RIBBON, ...RIBBON, ...RIBBON].map((r, i) => <span key={i} className="flex items-center gap-8">{r}<span className="text-primary">■■</span></span>)}
+        </div>
+      </div>
+      <a href="#about" aria-label="Scroll" className="absolute bottom-2 left-1/2 -translate-x-1/2 text-navy-foreground/50"><ChevronDown className="animate-bounce" /></a>
+    </section>
+  );
+}
+
+function SectionHead({ k, title, dark }: { k: string; title: string; dark?: boolean }) {
+  return (
+    <div className="reveal mb-12 max-w-2xl">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-accent">{k}</p>
+      <h2 className={`font-heading text-3xl font-extrabold md:text-5xl ${dark ? "text-navy-foreground" : "text-navy"}`}>{title}</h2>
+    </div>
+  );
+}
+
+function About() {
+  const areas = ["Performance Marketing", "SEO, AEO & GEO", "Lead Generation", "Integrated Marketing Plans", "KPI Analysis", "Multi-brand Campaigns"];
+  return (
+    <section id="about" className="mx-auto max-w-7xl px-6 py-28">
+      <SectionHead k="About Me" title="Practical, customer-focused, data-driven." />
+      <div className="grid gap-12 lg:grid-cols-2">
+        <div className="reveal space-y-5 text-lg leading-relaxed">
+          <p>Results-driven Digital Marketing professional with over 9 years of experience in digital strategy, performance marketing, SEO, SEM, lead generation, GEO and AEO.</p>
+          <p className="text-muted-foreground">I build integrated marketing plans, optimise campaigns through KPI analysis and coordinate cross-functional teams. My journey runs from hands-on ad operations and SEO to managing multi-brand initiatives across healthcare, technology and B2B/B2C sectors.</p>
+          <p className="text-muted-foreground">My philosophy is simple: understand the business first, let data guide decisions, and keep improving until the numbers move.</p>
+        </div>
+        <div className="reveal grid grid-cols-2 gap-3">
+          {areas.map((a) => <div key={a} className="rounded-2xl border bg-card p-5 font-heading font-semibold text-navy shadow-elegant transition hover:-translate-y-1 hover:border-primary">{a}</div>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const JOBS = [
+  { c: "HealthOnUs Technologies Private Limited", r: "Assistant Manager", d: "Nov 2024 – Sep 2026", b: ["Managed integrated digital marketing across SEO, GEO, AEO, paid advertising, social media and content.", "Managed 10+ campaigns.", "Increased qualified leads by 32%.", "Reduced CPL by 17%.", "Generated 1,000+ monthly leads.", "Managed Google Ads budgets up to ₹10 lakh monthly.", "Managed healthcare, technology and finance marketing initiatives.", "Led content planning, reporting and campaign optimisation."] },
+  { c: "AMTZ Limited", r: "Consultant C", d: "Jun 2024 – Oct 2024", b: ["Managed digital marketing, SEO, SEM and paid social.", "Planned daily social media content for eight internal companies.", "Managed Facebook, Instagram, LinkedIn and X campaigns.", "Coordinated with design, development and product teams."] },
+  { c: "ATAI Labs Pvt. Ltd.", r: "Digital Marketing Executive", d: "Apr 2022 – May 2024", b: ["Managed B2B technology and industrial marketing.", "Executed SEO, Google Ads and social media campaigns.", "Managed website optimisation, content and reporting."] },
+  { c: "IBST Pvt. Ltd.", r: "Digital Marketing Pro", d: "Aug 2020 – Apr 2022", b: ["Managed B2B and B2C marketing campaigns.", "Executed SEO, PPC, email and social media marketing.", "Mentored interns.", "Led a team in designing and developing a software product."] },
+  { c: "Digital IT Hub Software Solutions", r: "Senior Digital Marketing Analyst", d: "Aug 2017 – Aug 2020", b: ["Managed Google, Facebook, YouTube and TikTok advertising.", "Executed SEO and link-building strategies.", "Managed websites and social media.", "Delivered digital marketing training through Andhra Pradesh State Skill Development Corporation.", "Promoted to Senior Digital Marketing Analyst in October 2019."] },
+];
+
+function Experience() {
+  return (
+    <section id="experience" className="bg-navy text-navy-foreground">
+      <div className="mx-auto max-w-5xl px-6 py-28">
+        <SectionHead k="Experience" title="A career built on measurable results." dark />
+        <ol className="relative border-l border-navy-foreground/15 pl-8">
+          {JOBS.map((j) => (
+            <li key={j.c} className="reveal relative mb-12 last:mb-0">
+              <span className="absolute -left-[41px] top-1 size-4 rounded-full bg-brand ring-4 ring-navy" />
+              <p className="text-xs uppercase tracking-[0.2em] text-accent">{j.d}</p>
+              <h3 className="mt-1 font-heading text-xl font-bold">{j.r}</h3>
+              <p className="text-navy-foreground/70">{j.c}</p>
+              <ul className="mt-4 grid gap-2 text-sm text-navy-foreground/75 md:grid-cols-2">
+                {j.b.map((x) => <li key={x} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />{x}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+const SKILLS = [
+  { i: Target, t: "Performance Marketing", s: ["Google Ads", "Meta Ads", "PPC", "Performance Max", "Shopping Campaigns", "Lead Generation"] },
+  { i: Search, t: "SEO & Search", s: ["Technical SEO", "On-page SEO", "Off-page SEO", "Keyword Research", "GEO", "AEO"] },
+  { i: Share2, t: "Social Media", s: ["LinkedIn", "Instagram", "Social Media Management", "Content Calendars", "Content Creation"] },
+  { i: BarChart3, t: "Analytics", s: ["Google Analytics", "GTM", "Conversion Tracking", "Web Analytics", "KPI Reporting", "Performance Analysis"] },
+  { i: Users, t: "Management", s: ["Digital Marketing Strategy", "Cross-functional Collaboration", "Team Mentoring", "Campaign Management", "Email Marketing"] },
+];
+
+function Skills() {
+  return (
+    <section id="skills" className="mx-auto max-w-7xl px-6 py-28">
+      <SectionHead k="Skills & Expertise" title="Full-funnel marketing capability." />
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {SKILLS.map((k) => (
+          <div key={k.t} className="reveal group rounded-3xl border bg-card p-7 shadow-elegant transition hover:-translate-y-1 hover:border-primary">
+            <span className="grid size-12 place-items-center rounded-2xl bg-brand text-primary-foreground"><k.i /></span>
+            <h3 className="mt-5 font-heading text-xl font-bold text-navy">{k.t}</h3>
+            <div className="mt-4 flex flex-wrap gap-2">{k.s.map((x) => <span key={x} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{x}</span>)}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const SERVICES = [
+  { i: Compass, t: "Digital Marketing Strategy & Consulting", d: "Integrated plans aligned with business goals and budgets." },
+  { i: FileSearch, t: "Website Audit", d: "Technical, content and conversion review with clear priorities." },
+  { i: Search, t: "SEO, AEO & GEO Strategy", d: "Visibility across search engines and AI-powered answers." },
+  { i: Megaphone, t: "Google Ads and Meta Ads", d: "Planning, setup and ongoing optimisation of paid campaigns." },
+  { i: MousePointerClick, t: "Lead Generation & Conversion Tracking", d: "Funnels and accurate tracking that capture qualified leads." },
+  { i: Share2, t: "Social Media Marketing & Management", d: "Consistent, on-brand presence across key platforms." },
+  { i: CalendarDays, t: "Content Calendar & Content Strategy", d: "Planned content that supports search and campaigns." },
+  { i: LayoutTemplate, t: "Website and Landing Page Optimisation", d: "Faster, clearer pages built to convert visitors." },
+  { i: BarChart3, t: "Marketing Analytics & Reporting", d: "GA4, GTM and KPI dashboards that inform decisions." },
+];
+
+function Services() {
+  return (
+    <section id="services" className="bg-secondary">
+      <div className="mx-auto max-w-7xl px-6 py-28">
+        <SectionHead k="Services" title="How I can help your business grow." />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((s) => (
+            <div key={s.t} className="reveal group rounded-2xl bg-card p-6 transition hover:shadow-elegant">
+              <s.i className="size-7 text-primary transition group-hover:text-accent" />
+              <h3 className="mt-4 font-heading font-bold text-navy">{s.t}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{s.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const PROJECTS = [
+  { t: "Healthcare Digital Marketing", c: "HealthOnUs", tags: ["Integrated", "Healthcare", "Lead Gen"], d: "Integrated marketing across SEO, GEO, AEO, paid ads, social and content to drive healthcare lead generation.", r: ["32% growth in qualified leads", "17% reduction in CPL"] },
+  { t: "Google Ads Performance Campaigns", c: "Performance", tags: ["Google Ads", "Budgets"], d: "End-to-end campaign management, bid and budget optimisation with continuous reporting.", r: ["Monthly budgets up to ₹10 lakh", "1,000+ monthly leads"] },
+  { t: "SEO & Website Optimisation", c: "Search", tags: ["Technical SEO", "Content"], d: "Technical SEO, keyword research, content optimisation and website audits to strengthen organic visibility.", r: ["Technical SEO & audits", "Keyword & content optimisation"] },
+  { t: "B2B Technology Marketing", c: "ATAI Labs", tags: ["B2B", "SEO", "Paid"], d: "B2B and industrial marketing combining SEO, paid campaigns and digital brand development.", r: ["SEO & Google Ads execution", "Digital brand development"] },
+  { t: "Multi-brand Digital Marketing", c: "AMTZ", tags: ["Social", "Coordination"], d: "Coordinated digital marketing and daily social media for eight internal companies across major platforms.", r: ["8 internal companies", "Facebook, Instagram, LinkedIn & X"] },
+];
+
+function Work() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="work" className="mx-auto max-w-7xl px-6 py-28">
+      <SectionHead k="Featured Work" title="Case studies & projects." />
+      <div className="grid gap-4">
+        {PROJECTS.map((p, i) => (
+          <div key={p.t} className={`reveal overflow-hidden rounded-3xl border transition ${open === i ? "bg-navy text-navy-foreground" : "bg-card hover:border-primary"}`}>
+            <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center gap-6 p-6 text-left md:p-8" aria-expanded={open === i}>
+              <span className="font-heading text-3xl font-extrabold text-brand">0{i + 1}</span>
+              <div className="flex-1">
+                <p className={`text-xs uppercase tracking-[0.2em] ${open === i ? "text-accent" : "text-muted-foreground"}`}>{p.c}</p>
+                <h3 className={`font-heading text-xl font-bold md:text-2xl ${open === i ? "" : "text-navy"}`}>{p.t}</h3>
+              </div>
+              <ChevronDown className={`transition ${open === i ? "rotate-180" : ""}`} />
+            </button>
+            {open === i && (
+              <div className="grid gap-6 px-6 pb-8 md:grid-cols-2 md:px-8 md:pl-24">
+                <div>
+                  <p className="text-navy-foreground/80">{p.d}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">{p.tags.map((t) => <span key={t} className="rounded-full glass px-3 py-1 text-xs">{t}</span>)}</div>
+                </div>
+                <ul className="grid gap-3">{p.r.map((r) => <li key={r} className="flex items-center gap-3 rounded-xl glass p-4 font-semibold"><Sparkles className="size-4 text-accent" />{r}</li>)}</ul>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const STEPS = [
+  ["Understand", "Clarify business objectives, audiences and success metrics."],
+  ["Research", "Study audiences, competitors, keywords and channels."],
+  ["Strategise", "Plan the channel mix, budgets, content and KPIs."],
+  ["Execute", "Launch campaigns with clean tracking and tight coordination."],
+  ["Measure & Improve", "Analyse performance data and optimise continuously."],
+];
+
+function Approach() {
+  return (
+    <section className="bg-hero text-navy-foreground">
+      <div className="mx-auto max-w-7xl px-6 py-28">
+        <SectionHead k="My Marketing Approach" title="Five steps from insight to growth." dark />
+        <div className="grid gap-4 md:grid-cols-5">
+          {STEPS.map(([t, d], i) => (
+            <div key={t} className="reveal relative rounded-2xl glass p-6" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <span className="font-heading text-5xl font-extrabold text-brand">{i + 1}</span>
+              <h3 className="mt-3 font-heading text-lg font-bold">{t}</h3>
+              <p className="mt-2 text-sm text-navy-foreground/70">{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Education() {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-24">
+      <div className="reveal flex flex-col items-start gap-6 rounded-3xl border bg-card p-8 shadow-elegant md:flex-row md:items-center">
+        <span className="grid size-14 place-items-center rounded-2xl bg-brand text-primary-foreground"><GraduationCap /></span>
+        <div className="flex-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-accent">Education</p>
+          <h3 className="mt-1 font-heading text-2xl font-bold text-navy">B.Tech – Computer Science & Engineering</h3>
+          <p className="text-muted-foreground">Sasi Institute of Technology & Engineering · Graduated 2014</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const name = String(f.get("name") || "").trim().slice(0, 100);
+    const email = String(f.get("email") || "").trim().slice(0, 255);
+    const msg = String(f.get("message") || "").trim().slice(0, 2000);
+    if (!name || !/^\S+@\S+\.\S+$/.test(email) || !msg) { toast.error("Please fill in your name, a valid email and a message."); return; }
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Portfolio enquiry from ${name}`)}&body=${encodeURIComponent(`${msg}\n\n— ${name} (${email})`)}`;
+    toast.success("Opening your email app…");
+  };
+  const links = [
+    { i: Mail, l: EMAIL, h: `mailto:${EMAIL}` },
+    { i: Phone, l: "+91 8790009840", h: `tel:${PHONE}` },
+    { i: MessageCircle, l: "WhatsApp", h: `https://wa.me/918790009840` },
+    { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/" },
+    { i: MapPin, l: "Hyderabad, India", h: undefined },
+  ];
+  return (
+    <section id="contact" className="bg-navy-deep text-navy-foreground">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-2">
+        <div>
+          <SectionHead k="Contact" title="Let's Discuss Your Next Digital Growth Opportunity." dark />
+          <div className="reveal grid gap-3">
+            {links.map((x) => {
+              const inner = <><span className="grid size-10 place-items-center rounded-xl bg-brand"><x.i className="size-4" /></span>{x.l}</>;
+              return x.h ? <a key={x.l} href={x.h} target={x.h.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex items-center gap-4 rounded-2xl glass p-3 transition hover:translate-x-1">{inner}</a>
+                : <div key={x.l} className="flex items-center gap-4 rounded-2xl glass p-3">{inner}</div>;
+            })}
+          </div>
+        </div>
+        <form onSubmit={submit} className="reveal grid content-start gap-4 rounded-3xl glass p-8">
+          <Input name="name" placeholder="Your name" maxLength={100} className="h-12 border-navy-foreground/15 bg-navy/60" />
+          <Input name="email" type="email" placeholder="Your email" maxLength={255} className="h-12 border-navy-foreground/15 bg-navy/60" />
+          <Textarea name="message" placeholder="Tell me about your goals" rows={6} maxLength={2000} className="border-navy-foreground/15 bg-navy/60" />
+          <Button type="submit" variant="hero" size="lg">Send Message <ArrowUpRight /></Button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-navy-foreground/10 bg-navy-deep text-navy-foreground/70">
+      <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:grid-cols-3">
+        <div><p className="font-heading text-lg font-bold text-navy-foreground">Venkatesh Kuppili</p><p className="text-sm">Digital Marketing Strategist</p></div>
+        <nav className="flex flex-wrap gap-4 text-sm">{NAV.map(([l, id]) => <a key={id} href={`#${id}`} className="hover:text-navy-foreground">{l}</a>)}</nav>
+        <div className="text-sm"><a href={`mailto:${EMAIL}`} className="block hover:text-navy-foreground">{EMAIL}</a><a href={`tel:${PHONE}`} className="hover:text-navy-foreground">+91 8790009840</a></div>
+      </div>
+      <p className="pb-8 text-center text-xs">© {new Date().getFullYear()} Venkatesh Kuppili. All rights reserved.</p>
+    </footer>
   );
 }
