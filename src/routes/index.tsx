@@ -480,7 +480,7 @@ function Contact() {
     { i: Mail, l: EMAIL, h: `mailto:${EMAIL}` },
     { i: Phone, l: "+91 8790009840", h: `tel:${PHONE}` },
     { i: MessageCircle, l: "WhatsApp", h: `https://wa.me/918790009840` },
-    { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/" },
+    { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/in/venkatesh-kuppili" },
     { i: MapPin, l: "Hyderabad, India", h: undefined },
   ];
   return (
