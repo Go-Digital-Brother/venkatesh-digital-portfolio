@@ -175,7 +175,7 @@ function Hero() {
 function SectionHead({ k, title, dark, n }: { k: string; title: string; dark?: boolean; n?: string }) {
   return (
     <div className="reveal relative mb-14 max-w-3xl">
-      {n && <span aria-hidden className={`pointer-events-none absolute -top-16 right-0 select-none md:-right-24 font-heading text-[8rem] font-extrabold leading-none ${dark ? "text-navy-foreground/5" : "text-outline"}`}>{n}</span>}
+      {n && <span aria-hidden className={`pointer-events-none mb-3 block select-none font-heading text-6xl font-extrabold leading-none md:text-7xl ${dark ? "text-navy-foreground/10" : "text-outline"}`}>{n}</span>}
       <p className="relative mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-accent"><span className="h-px w-10 bg-brand" />{k}</p>
       <h2 className={`relative font-heading text-3xl font-extrabold md:text-5xl ${dark ? "text-navy-foreground" : "text-navy"}`}>{title}</h2>
     </div>
