@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
-  ArrowUpRight, Download, Mail, Phone, MapPin, MessageCircle, Linkedin, Target, Search, Share2,
+  ArrowUpRight, Camera, Mail, Phone, MapPin, MessageCircle, Linkedin, Target, Search, Share2,
   BarChart3, Users, Compass, FileSearch, Megaphone, MousePointerClick, CalendarDays, LayoutTemplate,
   LineChart, GraduationCap, ChevronDown, Sparkles, Menu, X,
 } from "lucide-react";
@@ -10,16 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
+import aboutPortrait from "@/assets/venkatesh-about.png";
 
 const EMAIL = "kuppili.venkat@gmail.com";
 const PHONE = "+918790009840";
-const RESUME = "/venkatesh-kuppili-resume.pdf";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Venkatesh Kuppili — Digital Marketing Strategist | SEO, AEO, GEO" },
-      { name: "description", content: "Digital Marketing Strategist with 9+ years in performance marketing, SEO, AEO, GEO and lead generation. Based in Hyderabad, India." },
+      { name: "description", content: "Digital Marketing Strategist with 9+ years in paid ads, SEO, AEO, GEO and lead generation. Based in Hyderabad, India." },
       { property: "og:title", content: "Venkatesh Kuppili — Digital Marketing Strategist" },
       { property: "og:description", content: "Turning digital marketing strategies into measurable business growth." },
       { property: "og:type", content: "profile" },
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
         jobTitle: "Digital Marketing Strategist", email: `mailto:${EMAIL}`, telephone: "+91 8790009840",
         address: { "@type": "PostalAddress", addressLocality: "Hyderabad", addressCountry: "IN" },
         alumniOf: "Sasi Institute of Technology & Engineering",
-        knowsAbout: ["Performance Marketing", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation"],
+        knowsAbout: ["Paid Ads", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation", "OOH Marketing"],
       }),
     }],
   }),
@@ -101,7 +101,7 @@ function Header() {
 }
 
 const METRICS = [["9+", "Years of Experience"], ["1,000+", "Monthly Leads"], ["32%", "Increase in Qualified Leads"], ["17%", "Reduction in CPL"]];
-const RIBBON = ["Performance Marketing", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation", "Analytics"];
+const RIBBON = ["Paid Ads", "SEO", "AEO", "GEO", "Google Ads", "Meta Ads", "Lead Generation", "OOH Marketing", "Camera Handling", "Analytics"];
 const ORBIT = [
   { icon: Target, t: "Google Ads", s: "Up to ₹10L / mo" },
   { icon: Search, t: "SEO · AEO · GEO", s: "Search visibility" },
@@ -128,11 +128,11 @@ function Hero() {
             Building Digital Growth Through Strategy, Performance & Innovation.
           </p>
           <p className="animate-rise mt-4 max-w-lg text-sm uppercase leading-relaxed tracking-wide text-navy-foreground/60" style={{ animationDelay: ".3s" }}>
-            Digital Marketing Strategist · Performance Marketing · SEO · AEO · GEO — 9+ years turning campaigns into measurable business results.
+            Digital Marketing Strategist · Paid Ads · SEO · AEO · GEO — 9+ years turning campaigns into measurable business results.
           </p>
           <div className="animate-rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: ".4s" }}>
             <Button asChild variant="hero" size="lg"><a href="#work">View My Portfolio <ArrowUpRight /></a></Button>
-            <Button asChild variant="glass" size="lg"><a href={RESUME} download>Download Resume <Download /></a></Button>
+            <Button asChild variant="glass" size="lg"><a href="#experience">My Experience <ArrowUpRight /></a></Button>
             <Button asChild variant="ghostLight" size="lg"><a href="#contact">[ Let's Connect ]</a></Button>
           </div>
           <div className="animate-rise mt-12 grid max-w-xl grid-cols-2 gap-px overflow-hidden rounded-2xl glass sm:grid-cols-4" style={{ animationDelay: ".5s" }}>
@@ -183,14 +183,14 @@ function SectionHead({ k, title, dark, n }: { k: string; title: string; dark?: b
 }
 
 function About() {
-  const areas = [[Target, "Performance Marketing"], [Search, "SEO, AEO & GEO"], [Users, "Lead Generation"], [Compass, "Integrated Marketing Plans"], [BarChart3, "KPI Analysis"], [Share2, "Multi-brand Campaigns"]] as const;
+  const areas = [[Target, "Paid Ads"], [Search, "SEO, AEO & GEO"], [Users, "Lead Generation"], [Compass, "Integrated Marketing Plans"], [BarChart3, "KPI Analysis"], [Share2, "Multi-brand Campaigns"], [Megaphone, "OOH Marketing"], [Camera, "Camera Handling"], [Sparkles, "Content Creation"]] as const;
   return (
     <section id="about" className="mx-auto max-w-7xl px-6 py-28">
       <SectionHead n="01" k="About Me" title="Practical, customer-focused, data-driven." />
       <div className="grid gap-5 lg:grid-cols-12">
         <div className="reveal relative overflow-hidden rounded-3xl bg-hero p-8 text-navy-foreground lg:col-span-5 lg:row-span-2">
           <div className="grid-lines absolute inset-0" />
-          <img src={portrait} alt="" loading="lazy" className="relative mx-auto h-80 w-auto object-contain [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
+          <img src={aboutPortrait} alt="Venkatesh Kuppili" loading="lazy" className="relative mx-auto h-80 w-auto object-contain [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
           <div className="relative -mt-6">
             <p className="font-heading text-2xl font-bold">Venkatesh Kuppili</p>
             <p className="text-sm text-navy-foreground/70">Digital Marketing Strategist · Hyderabad</p>
@@ -200,7 +200,7 @@ function About() {
           </div>
         </div>
         <div className="reveal rounded-3xl border bg-card p-8 shadow-elegant lg:col-span-7">
-          <p className="font-heading text-2xl font-semibold leading-snug text-navy">Results-driven Digital Marketing professional with over <span className="text-brand">9 years</span> of experience in digital strategy, performance marketing, SEO, SEM, lead generation, GEO and AEO.</p>
+          <p className="font-heading text-2xl font-semibold leading-snug text-navy">Results-driven Digital Marketing professional with over <span className="text-brand">9 years</span> of experience in digital strategy, paid ads, SEO, SEM, lead generation, GEO and AEO.</p>
           <p className="mt-5 text-muted-foreground">I build integrated marketing plans, optimise campaigns through KPI analysis and coordinate cross-functional teams — from hands-on ad operations and SEO to multi-brand initiatives across healthcare, technology and B2B/B2C sectors.</p>
           <blockquote className="mt-6 border-l-2 border-accent pl-4 italic text-navy">"Understand the business first, let data guide decisions, and keep improving until the numbers move."</blockquote>
         </div>
@@ -233,7 +233,7 @@ function Experience() {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHead n="02" k="Experience" title="A career built on measurable results." dark />
           <p className="reveal max-w-sm text-navy-foreground/70">From analyst to Assistant Manager — nine years across agencies, B2B technology and healthcare.</p>
-          <Button asChild variant="glass" size="lg" className="mt-8"><a href={RESUME} download>Download Resume <Download /></a></Button>
+          <Button asChild variant="glass" size="lg" className="mt-8"><a href="#contact">Work With Me <ArrowUpRight /></a></Button>
         </div>
         <ol className="relative space-y-5 before:absolute before:left-[19px] before:top-2 before:h-full before:w-px before:bg-brand before:opacity-40">
           {JOBS.map((j, i) => (
@@ -257,10 +257,11 @@ function Experience() {
 }
 
 const SKILLS = [
-  { i: Target, t: "Performance Marketing", s: ["Google Ads", "Meta Ads", "PPC", "Performance Max", "Shopping Campaigns", "Lead Generation"] },
+  { i: Target, t: "Paid Ads", s: ["Google Ads", "Meta Ads", "PPC", "Performance Max", "Shopping Campaigns", "Lead Generation"] },
   { i: Search, t: "SEO & Search", s: ["Technical SEO", "On-page SEO", "Off-page SEO", "Keyword Research", "GEO", "AEO"] },
   { i: Share2, t: "Social Media", s: ["LinkedIn", "Instagram", "Social Media Management", "Content Calendars", "Content Creation"] },
   { i: BarChart3, t: "Analytics", s: ["Google Analytics", "GTM", "Conversion Tracking", "Web Analytics", "KPI Reporting", "Performance Analysis"] },
+  { i: Camera, t: "Creative & Offline", s: ["Camera Handling", "Photo & Video Shoots", "OOH Marketing", "Hoardings & Outdoor Media"] },
   { i: Users, t: "Management", s: ["Digital Marketing Strategy", "Cross-functional Collaboration", "Team Mentoring", "Campaign Management", "Email Marketing"] },
 ];
 
@@ -272,7 +273,7 @@ function Skills() {
         {SKILLS.map((k, i) => {
           const big = i === 0;
           return (
-            <div key={k.t} className={`reveal ring-brand group relative overflow-hidden rounded-3xl p-7 transition hover:-translate-y-1 ${big ? "bg-hero text-navy-foreground lg:row-span-2" : "border bg-card shadow-elegant"}`}>
+            <div key={k.t} className={`reveal ring-brand group relative overflow-hidden rounded-3xl p-7 transition hover:-translate-y-1 ${big ? "bg-hero text-navy-foreground" : "border bg-card shadow-elegant"}`}>
               {big && <div className="grid-lines absolute inset-0" />}
               <div className="relative">
                 <div className="flex items-center justify-between">
@@ -281,7 +282,7 @@ function Skills() {
                 </div>
                 <h3 className={`mt-6 font-heading font-bold ${big ? "text-3xl" : "text-xl text-navy"}`}>{k.t}</h3>
                 {big && <p className="mt-3 text-navy-foreground/70">Google Ads budgets up to ₹10 lakh monthly, generating 1,000+ leads every month.</p>}
-                <div className={`mt-5 flex flex-wrap gap-2 ${big ? "lg:mt-24" : ""}`}>{k.s.map((x) => <span key={x} className={`rounded-full px-3 py-1 text-xs ${big ? "glass" : "bg-secondary text-secondary-foreground"}`}>{x}</span>)}</div>
+                <div className={`mt-5 flex flex-wrap gap-2`}>{k.s.map((x) => <span key={x} className={`rounded-full px-3 py-1 text-xs ${big ? "glass" : "bg-secondary text-secondary-foreground"}`}>{x}</span>)}</div>
               </div>
             </div>
           );
@@ -300,6 +301,7 @@ const SERVICES = [
   { i: Share2, t: "Social Media Marketing & Management", d: "Consistent, on-brand presence across key platforms." },
   { i: CalendarDays, t: "Content Calendar & Content Strategy", d: "Planned content that supports search and campaigns." },
   { i: LayoutTemplate, t: "Website and Landing Page Optimisation", d: "Faster, clearer pages built to convert visitors." },
+  { i: Camera, t: "OOH Marketing & Shoots", d: "Outdoor campaigns plus hands-on camera work for brand content." },
   { i: BarChart3, t: "Marketing Analytics & Reporting", d: "GA4, GTM and KPI dashboards that inform decisions." },
 ];
 
@@ -308,9 +310,9 @@ function Services() {
     <section id="services" className="bg-secondary">
       <div className="mx-auto max-w-7xl px-6 py-28">
         <SectionHead n="04" k="Services" title="How I can help your business grow." />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => (
-            <a href="#contact" key={s.t} className="reveal ring-brand group relative flex flex-col overflow-hidden rounded-3xl bg-card p-7 transition hover:-translate-y-1 hover:shadow-elegant">
+            <a href="#contact" key={s.t} className={`${i < 2 ? "lg:col-span-2" : ""} reveal ring-brand group relative flex flex-col overflow-hidden rounded-3xl bg-card p-7 transition hover:-translate-y-1 hover:shadow-elegant`}>
               <span className="absolute -right-10 -top-10 size-32 rounded-full bg-brand opacity-0 blur-2xl transition group-hover:opacity-30" />
               <div className="flex items-center justify-between">
                 <span className="grid size-12 place-items-center rounded-2xl bg-secondary text-primary transition group-hover:bg-brand group-hover:text-primary-foreground"><s.i className="size-5" /></span>
