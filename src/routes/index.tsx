@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
 import aboutPortrait from "@/assets/venkatesh-about.png";
+import vkLogo from "@/assets/vk_logo.png.asset.json";
 
 const EMAIL = "kuppili.venkat@gmail.com";
 const PHONE = "+918790009840";
@@ -80,7 +81,12 @@ function Header() {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all ${scrolled ? "bg-navy-deep/85 backdrop-blur-xl py-3" : "py-5"}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="font-heading text-xl font-extrabold text-navy-foreground">venkatesh<span className="text-accent">.</span></a>
+        <a href="#top" className="flex items-center gap-3">
+          <span className="rounded-xl bg-white/95 p-1.5 shadow-lg shadow-black/20">
+            <img src={vkLogo.url} alt="VK Growth Marketing logo" className="h-7 w-auto" />
+          </span>
+          <span className="font-heading text-xl font-extrabold text-navy-foreground">venkatesh<span className="text-accent">.</span></span>
+        </a>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map(([l, id], i) => (
             <a key={id} href={`#${id}`} className="group flex items-center gap-3 px-3 text-xs font-medium uppercase tracking-[0.18em] text-navy-foreground/70 transition hover:text-navy-foreground">
@@ -457,7 +463,10 @@ function Footer() {
   return (
     <footer className="border-t border-navy-foreground/10 bg-navy-deep text-navy-foreground/70">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:grid-cols-3">
-        <div><p className="font-heading text-lg font-bold text-navy-foreground">Venkatesh Kuppili</p><p className="text-sm">Digital Marketing Strategist</p></div>
+        <div>
+          <span className="mb-3 inline-block rounded-xl bg-white/95 p-2"><img src={vkLogo.url} alt="VK Growth Marketing logo" className="h-9 w-auto" /></span>
+          <p className="font-heading text-lg font-bold text-navy-foreground">Venkatesh Kuppili</p><p className="text-sm">Digital Marketing Strategist</p>
+        </div>
         <nav className="flex flex-wrap gap-4 text-sm">{NAV.map(([l, id]) => <a key={id} href={`#${id}`} className="hover:text-navy-foreground">{l}</a>)}</nav>
         <div className="text-sm"><a href={`mailto:${EMAIL}`} className="block hover:text-navy-foreground">{EMAIL}</a><a href={`tel:${PHONE}`} className="hover:text-navy-foreground">+91 8790009840</a></div>
       </div>
