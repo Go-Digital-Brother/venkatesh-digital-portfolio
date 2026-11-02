@@ -85,7 +85,6 @@ function Header() {
           <span className="rounded-xl bg-white/95 p-1.5 shadow-lg shadow-black/20">
             <img src={vkLogo.url} alt="VK Growth Marketing logo" className="h-7 w-auto" />
           </span>
-          <span className="font-heading text-xl font-extrabold text-navy-foreground">venkatesh<span className="text-accent">.</span></span>
         </a>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map(([l, id], i) => (
