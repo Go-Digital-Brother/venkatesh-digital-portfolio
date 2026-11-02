@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
 import aboutPortrait from "@/assets/venkatesh-about.png";
+import vkLogo from "@/assets/vk_logo.png.asset.json";
 
 const EMAIL = "kuppili.venkat@gmail.com";
 const PHONE = "+918790009840";
