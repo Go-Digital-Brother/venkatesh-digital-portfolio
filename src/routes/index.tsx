@@ -1,14 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowUpRight, Camera, Mail, Phone, MapPin, MessageCircle, Linkedin, Target, Search, Share2,
   BarChart3, Users, Compass, FileSearch, Megaphone, MousePointerClick, CalendarDays, LayoutTemplate,
   LineChart, GraduationCap, ChevronDown, Sparkles, Menu, X,
 } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
 import aboutImg from "@/assets/about-workspace.jpg";
 import seoImg from "@/assets/seo-freelance.jpg";
@@ -466,16 +463,6 @@ function Education() {
 }
 
 function Contact() {
-  const submit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const name = String(f.get("name") || "").trim().slice(0, 100);
-    const email = String(f.get("email") || "").trim().slice(0, 255);
-    const msg = String(f.get("message") || "").trim().slice(0, 2000);
-    if (!name || !/^\S+@\S+\.\S+$/.test(email) || !msg) { toast.error("Please fill in your name, a valid email and a message."); return; }
-    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(`Portfolio enquiry from ${name}`)}&body=${encodeURIComponent(`${msg}\n\n— ${name} (${email})`)}`;
-    toast.success("Opening your email app…");
-  };
   const links = [
     { i: Mail, l: EMAIL, h: `mailto:${EMAIL}` },
     { i: Phone, l: "+91 8790009840", h: `tel:${PHONE}` },
@@ -483,25 +470,33 @@ function Contact() {
     { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/in/venkatesh-kuppili" },
     { i: MapPin, l: "Hyderabad, India", h: undefined },
   ];
+  const wa = `https://wa.me/918790009840?text=${encodeURIComponent("Hi Venkatesh, I'd like to discuss a digital marketing project.")}`;
   return (
     <section id="contact" className="bg-navy-deep text-navy-foreground">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-2">
-        <div>
-          <SectionHead n="07" k="Contact" title="Let's Discuss Your Next Digital Growth Opportunity." dark />
-          <div className="reveal grid gap-3">
-            {links.map((x) => {
-              const inner = <><span className="grid size-10 place-items-center rounded-xl bg-brand"><x.i className="size-4" /></span>{x.l}</>;
-              return x.h ? <a key={x.l} href={x.h} target={x.h.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex items-center gap-4 rounded-2xl glass p-3 transition hover:translate-x-1">{inner}</a>
-                : <div key={x.l} className="flex items-center gap-4 rounded-2xl glass p-3">{inner}</div>;
-            })}
+      <div className="mx-auto max-w-7xl px-6 py-28">
+        <SectionHead n="07" k="Contact" title="Let's Discuss Your Next Digital Growth Opportunity." dark />
+        <div className="reveal relative overflow-hidden rounded-[2rem] bg-hero p-8 ring-brand md:p-14">
+          <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-brand opacity-30 blur-3xl" />
+          <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
+            <span className="size-2 animate-pulse rounded-full bg-accent" /> Need digital marketing? WhatsApp me
+          </span>
+          <a href={wa} target="_blank" rel="noreferrer" className="mt-6 flex items-center gap-4 font-heading text-4xl font-extrabold tracking-tight transition hover:opacity-90 sm:text-6xl lg:text-7xl">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-brand shadow-glow sm:size-20"><MessageCircle className="size-7 sm:size-10" /></span>
+            <span className="text-brand">+91 87900 09840</span>
+          </a>
+          <p className="mt-6 max-w-2xl text-navy-foreground/75">SEO, AEO & GEO, Google & Meta Ads, lead generation, social media, OOH marketing and strategy — message me on WhatsApp for a quick reply.</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg" variant="hero"><a href={wa} target="_blank" rel="noreferrer">Chat on WhatsApp <ArrowUpRight /></a></Button>
+            <Button asChild size="lg" variant="glass"><a href={`tel:${PHONE}`}>Call Now</a></Button>
           </div>
         </div>
-        <form onSubmit={submit} className="reveal grid content-start gap-4 rounded-3xl glass p-8">
-          <Input name="name" placeholder="Your name" maxLength={100} className="h-12 border-navy-foreground/15 bg-navy/60" />
-          <Input name="email" type="email" placeholder="Your email" maxLength={255} className="h-12 border-navy-foreground/15 bg-navy/60" />
-          <Textarea name="message" placeholder="Tell me about your goals" rows={6} maxLength={2000} className="border-navy-foreground/15 bg-navy/60" />
-          <Button type="submit" variant="hero" size="lg">Send Message <ArrowUpRight /></Button>
-        </form>
+        <div className="reveal mt-5 grid gap-3 sm:grid-cols-3">
+          {links.filter((x) => x.l !== "WhatsApp" && x.i !== Phone).map((x) => {
+            const inner = <><span className="grid size-10 place-items-center rounded-xl bg-brand"><x.i className="size-4" /></span><span className="truncate">{x.l}</span></>;
+            return x.h ? <a key={x.l} href={x.h} target={x.h.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex items-center gap-4 rounded-2xl glass p-3 transition hover:translate-x-1">{inner}</a>
+              : <div key={x.l} className="flex items-center gap-4 rounded-2xl glass p-3">{inner}</div>;
+          })}
+        </div>
       </div>
     </section>
   );
