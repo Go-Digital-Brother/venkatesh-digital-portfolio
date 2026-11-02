@@ -120,9 +120,9 @@ function Hero() {
           <p className="animate-rise mb-6 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.2em]">
             <span className="size-2 animate-pulse rounded-full bg-accent" /> Venkatesh Kuppili · Hyderabad
           </p>
-          <h1 className="animate-rise font-heading text-[clamp(2.6rem,7vw,6.2rem)] font-extrabold uppercase leading-[0.92]" style={{ animationDelay: ".1s" }}>
-            <span className="block pl-[12%]">Strategy that</span>
-            <span className="flex justify-between"><span>Drives</span><span className="text-brand">Growth.</span></span>
+          <h1 className="animate-rise font-heading text-[clamp(2.4rem,5.6vw,5rem)] font-extrabold uppercase leading-[0.92]" style={{ animationDelay: ".1s" }}>
+            <span className="block whitespace-nowrap pl-[10%]">Strategy that</span>
+            <span className="flex justify-between gap-4"><span>Drives</span><span className="text-brand">Growth.</span></span>
           </h1>
           <p className="animate-rise mt-6 font-heading text-lg font-semibold text-navy-foreground/90 md:text-xl" style={{ animationDelay: ".2s" }}>
             Building Digital Growth Through Strategy, Performance & Innovation.
@@ -151,7 +151,7 @@ function Hero() {
           <div className="animate-orbit absolute left-1/2 top-[45%] size-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/30" />
           <img src={portrait} alt="Venkatesh Kuppili, Digital Marketing Strategist" className="relative z-10 mx-auto h-full w-auto object-contain object-bottom drop-shadow-2xl [mask-image:linear-gradient(to_bottom,black_75%,transparent)]" />
           {ORBIT.map((o, i) => {
-            const pos = ["left-0 top-[12%]", "right-0 top-[6%]", "-left-4 top-[48%]", "right-[-1rem] top-[40%]", "left-[4%] bottom-[14%]", "right-[2%] bottom-[20%]"][i];
+            const pos = ["left-0 top-[12%]", "right-0 top-[6%]", "-left-4 top-[48%]", "right-[-1.5rem] top-[58%]", "left-[4%] bottom-[14%]", "right-[-1rem] bottom-[6%]"][i];
             return (
               <div key={o.t} className={`animate-float absolute z-20 hidden items-center gap-3 rounded-xl glass px-3 py-2 shadow-elegant sm:flex ${pos}`} style={{ animationDelay: `${i * 0.7}s` }}>
                 <span className="grid size-8 place-items-center rounded-lg bg-brand"><o.icon className="size-4" /></span>
