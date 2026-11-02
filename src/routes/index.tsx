@@ -5,10 +5,7 @@ import {
   BarChart3, Users, Compass, FileSearch, Megaphone, MousePointerClick, CalendarDays, LayoutTemplate,
   LineChart, GraduationCap, ChevronDown, Sparkles, Menu, X,
 } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
 import aboutImg from "@/assets/about-workspace.jpg";
 import seoImg from "@/assets/seo-freelance.jpg";
