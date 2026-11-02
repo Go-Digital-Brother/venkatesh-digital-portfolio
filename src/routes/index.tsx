@@ -151,7 +151,7 @@ function Hero() {
           <div className="animate-orbit absolute left-1/2 top-[45%] size-[78%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-accent/30" />
           <img src={portrait} alt="Venkatesh Kuppili, Digital Marketing Strategist" className="relative z-10 mx-auto h-full w-auto object-contain object-bottom drop-shadow-2xl [mask-image:linear-gradient(to_bottom,black_75%,transparent)]" />
           {ORBIT.map((o, i) => {
-            const pos = ["left-0 top-[12%]", "right-0 top-[6%]", "-left-4 top-[48%]", "right-[-1.5rem] top-[58%]", "left-[4%] bottom-[14%]", "right-[-1rem] bottom-[6%]"][i];
+            const pos = ["left-0 top-[8%]", "right-0 top-[3%]", "-left-6 top-[38%]", "-left-2 top-[64%]", "-right-4 top-[46%]", "-right-2 bottom-[12%]"][i];
             return (
               <div key={o.t} className={`animate-float absolute z-20 hidden items-center gap-3 rounded-xl glass px-3 py-2 shadow-elegant sm:flex ${pos}`} style={{ animationDelay: `${i * 0.7}s` }}>
                 <span className="grid size-8 place-items-center rounded-lg bg-brand"><o.icon className="size-4" /></span>
