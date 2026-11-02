@@ -10,7 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import portrait from "@/assets/venkatesh-cutout.png";
-import aboutPortrait from "@/assets/venkatesh-about.png";
+import aboutImg from "@/assets/about-workspace.jpg";
+import seoImg from "@/assets/seo-freelance.jpg";
+import ResultsCharts from "@/components/ResultsCharts";
 import vkLogo from "@/assets/vk_logo.png.asset.json";
 
 const EMAIL = "kuppili.venkat@gmail.com";
@@ -59,8 +61,10 @@ function Index() {
         <Hero />
         <About />
         <Experience />
+        <Results />
         <Skills />
         <Services />
+        <Freelance />
         <Work />
         <Approach />
         <Education />
@@ -195,8 +199,8 @@ function About() {
       <div className="grid gap-5 lg:grid-cols-12">
         <div className="reveal relative overflow-hidden rounded-3xl bg-hero p-8 text-navy-foreground lg:col-span-5 lg:row-span-2">
           <div className="grid-lines absolute inset-0" />
-          <img src={aboutPortrait} alt="Venkatesh Kuppili" loading="lazy" className="relative mx-auto h-80 w-auto object-contain [mask-image:linear-gradient(to_bottom,black_70%,transparent)]" />
-          <div className="relative -mt-6">
+          <img src={aboutImg} alt="Marketing analytics workspace with dashboards" loading="lazy" width={1024} height={1280} className="relative h-80 w-full rounded-2xl object-cover transition duration-700 hover:scale-105" />
+          <div className="relative mt-5">
             <p className="font-heading text-2xl font-bold">Venkatesh Kuppili</p>
             <p className="text-sm text-navy-foreground/70">Digital Marketing Strategist · Hyderabad</p>
             <div className="mt-5 grid grid-cols-3 gap-2 text-center">
@@ -231,31 +235,76 @@ const JOBS = [
 ];
 
 function Experience() {
+  const [sel, setSel] = useState(0);
+  const j = JOBS[sel]!;
   return (
     <section id="experience" className="relative overflow-hidden bg-navy text-navy-foreground">
       <div className="grid-lines absolute inset-0" />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-28 lg:grid-cols-[1fr_1.6fr]">
-        <div className="lg:sticky lg:top-28 lg:self-start">
+      <div className="pointer-events-none absolute -right-40 top-20 size-[32rem] rounded-full bg-brand opacity-20 blur-3xl" />
+      <div className="relative mx-auto max-w-7xl px-6 py-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead n="02" k="Experience" title="A career built on measurable results." dark />
-          <p className="reveal max-w-sm text-navy-foreground/70">From analyst to Assistant Manager — nine years across agencies, B2B technology and healthcare.</p>
-          <Button asChild variant="glass" size="lg" className="mt-8"><a href="#contact">Work With Me <ArrowUpRight /></a></Button>
+          <p className="reveal mb-14 max-w-sm text-navy-foreground/70">Nine years, five companies — tap a role to explore it.</p>
         </div>
-        <ol className="relative space-y-5 before:absolute before:left-[19px] before:top-2 before:h-full before:w-px before:bg-brand before:opacity-40">
-          {JOBS.map((j, i) => (
-            <li key={j.c} className="reveal relative pl-14">
-              <span className={`absolute left-0 top-6 grid size-10 place-items-center rounded-full font-heading text-xs font-bold ${i === 0 ? "bg-brand shadow-glow" : "glass"}`}>{String(JOBS.length - i).padStart(2, "0")}</span>
-              <div className="ring-brand rounded-2xl glass p-6 transition hover:-translate-y-0.5">
-                <div className="flex flex-wrap items-start justify-between gap-2">
-                  <div><h3 className="font-heading text-xl font-bold">{j.r}</h3><p className="text-navy-foreground/70">{j.c}</p></div>
-                  <span className="rounded-full bg-navy-foreground/10 px-3 py-1 text-xs text-accent">{j.d}</span>
-                </div>
-                <ul className="mt-4 grid gap-2 text-sm text-navy-foreground/75 md:grid-cols-2">
-                  {j.b.map((x) => <li key={x} className="flex gap-2"><span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />{x}</li>)}
-                </ul>
-              </div>
-            </li>
+        <div className="mb-8 flex gap-1 overflow-x-auto rounded-2xl glass p-1.5">
+          {JOBS.map((x, i) => (
+            <button key={x.c} onClick={() => setSel(i)} className={`min-w-40 flex-1 rounded-xl px-4 py-3 text-left transition ${i === sel ? "bg-brand shadow-glow" : "hover:bg-navy-foreground/10"}`}>
+              <span className="block text-[11px] uppercase tracking-widest opacity-70">{x.d.split(" – ")[0]}</span>
+              <span className="block truncate font-heading text-sm font-bold">{x.c.split(" ")[0]} {x.c.split(" ")[1] ?? ""}</span>
+            </button>
           ))}
-        </ol>
+        </div>
+        <div key={sel} className="grid animate-rise gap-5 lg:grid-cols-[1fr_1.5fr]">
+          <div className="relative overflow-hidden rounded-3xl bg-brand p-8 shadow-glow">
+            <span aria-hidden className="absolute -right-4 -top-8 font-heading text-[10rem] font-extrabold leading-none opacity-15">{String(JOBS.length - sel).padStart(2, "0")}</span>
+            <p className="relative text-xs uppercase tracking-[0.2em] opacity-80">{j.d}</p>
+            <h3 className="relative mt-3 font-heading text-3xl font-extrabold">{j.r}</h3>
+            <p className="relative mt-2 opacity-85">{j.c}</p>
+            <div className="relative mt-8 h-1.5 overflow-hidden rounded-full bg-navy-foreground/20"><div className="h-full rounded-full bg-navy-foreground" style={{ width: `${((JOBS.length - sel) / JOBS.length) * 100}%` }} /></div>
+            <p className="relative mt-2 text-xs opacity-75">Career stage {JOBS.length - sel} of {JOBS.length}</p>
+          </div>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {j.b.map((x, i) => (
+              <li key={x} className="ring-brand flex gap-3 rounded-2xl glass p-4 text-sm text-navy-foreground/85 transition hover:-translate-y-0.5">
+                <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-navy-foreground/10 font-heading text-xs font-bold text-accent">{i + 1}</span>{x}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Results() {
+  return (
+    <section id="results" className="relative overflow-hidden bg-navy-deep text-navy-foreground">
+      <div className="relative mx-auto max-w-7xl px-6 py-28">
+        <SectionHead k="Results in numbers" title="Growth you can see on a chart." dark />
+        <ResultsCharts />
+        <p className="mt-4 text-xs text-navy-foreground/50">Monthly trend and channel split are illustrative; headline figures reflect real results.</p>
+      </div>
+    </section>
+  );
+}
+
+function Freelance() {
+  return (
+    <section id="freelance" className="mx-auto max-w-7xl px-6 py-28">
+      <div className="reveal grid overflow-hidden rounded-[2rem] bg-hero text-navy-foreground shadow-elegant lg:grid-cols-2">
+        <div className="relative p-10 md:p-14">
+          <span className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold"><span className="size-2 animate-pulse rounded-full bg-accent" />Available for freelance projects</span>
+          <h2 className="mt-6 font-heading text-3xl font-extrabold md:text-5xl">I'm a freelancer, <span className="text-brand">ready to take your project.</span></h2>
+          <p className="mt-5 text-navy-foreground/75">One of the best SEO services you can hire — technical SEO, content, AEO and GEO that gets you found on Google and AI search, backed by paid ads that convert.</p>
+          <ul className="mt-6 grid gap-2 text-sm sm:grid-cols-2">
+            {["SEO audits & fixes", "AEO & GEO for AI search", "Google & Meta Ads", "Lead generation funnels"].map((x) => <li key={x} className="flex items-center gap-2"><Sparkles className="size-4 text-accent" />{x}</li>)}
+          </ul>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg" variant="hero"><a href="#contact">Start a Project <ArrowUpRight /></a></Button>
+            <Button asChild size="lg" variant="glass"><a href={`https://wa.me/${PHONE.replace("+", "")}`} target="_blank" rel="noreferrer">WhatsApp Me</a></Button>
+          </div>
+        </div>
+        <img src={seoImg} alt="SEO growth illustration" loading="lazy" width={1280} height={960} className="h-full min-h-72 w-full object-cover" />
       </div>
     </section>
   );
@@ -431,7 +480,7 @@ function Contact() {
     { i: Mail, l: EMAIL, h: `mailto:${EMAIL}` },
     { i: Phone, l: "+91 8790009840", h: `tel:${PHONE}` },
     { i: MessageCircle, l: "WhatsApp", h: `https://wa.me/918790009840` },
-    { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/" },
+    { i: Linkedin, l: "LinkedIn", h: "https://www.linkedin.com/in/venkatesh-kuppili" },
     { i: MapPin, l: "Hyderabad, India", h: undefined },
   ];
   return (
