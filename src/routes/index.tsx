@@ -273,7 +273,7 @@ function Skills() {
         {SKILLS.map((k, i) => {
           const big = i === 0;
           return (
-            <div key={k.t} className={`reveal ring-brand group relative overflow-hidden rounded-3xl p-7 transition hover:-translate-y-1 ${big ? "bg-hero text-navy-foreground lg:row-span-2" : "border bg-card shadow-elegant"}`}>
+            <div key={k.t} className={`reveal ring-brand group relative overflow-hidden rounded-3xl p-7 transition hover:-translate-y-1 ${big ? "bg-hero text-navy-foreground" : "border bg-card shadow-elegant"}`}>
               {big && <div className="grid-lines absolute inset-0" />}
               <div className="relative">
                 <div className="flex items-center justify-between">
@@ -282,7 +282,7 @@ function Skills() {
                 </div>
                 <h3 className={`mt-6 font-heading font-bold ${big ? "text-3xl" : "text-xl text-navy"}`}>{k.t}</h3>
                 {big && <p className="mt-3 text-navy-foreground/70">Google Ads budgets up to ₹10 lakh monthly, generating 1,000+ leads every month.</p>}
-                <div className={`mt-5 flex flex-wrap gap-2 ${big ? "lg:mt-24" : ""}`}>{k.s.map((x) => <span key={x} className={`rounded-full px-3 py-1 text-xs ${big ? "glass" : "bg-secondary text-secondary-foreground"}`}>{x}</span>)}</div>
+                <div className={`mt-5 flex flex-wrap gap-2`}>{k.s.map((x) => <span key={x} className={`rounded-full px-3 py-1 text-xs ${big ? "glass" : "bg-secondary text-secondary-foreground"}`}>{x}</span>)}</div>
               </div>
             </div>
           );
@@ -310,9 +310,9 @@ function Services() {
     <section id="services" className="bg-secondary">
       <div className="mx-auto max-w-7xl px-6 py-28">
         <SectionHead n="04" k="Services" title="How I can help your business grow." />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => (
-            <a href="#contact" key={s.t} className="reveal ring-brand group relative flex flex-col overflow-hidden rounded-3xl bg-card p-7 transition hover:-translate-y-1 hover:shadow-elegant">
+            <a href="#contact" key={s.t} className={`${i < 2 ? "lg:col-span-2" : ""} reveal ring-brand group relative flex flex-col overflow-hidden rounded-3xl bg-card p-7 transition hover:-translate-y-1 hover:shadow-elegant`}>
               <span className="absolute -right-10 -top-10 size-32 rounded-full bg-brand opacity-0 blur-2xl transition group-hover:opacity-30" />
               <div className="flex items-center justify-between">
                 <span className="grid size-12 place-items-center rounded-2xl bg-secondary text-primary transition group-hover:bg-brand group-hover:text-primary-foreground"><s.i className="size-5" /></span>
