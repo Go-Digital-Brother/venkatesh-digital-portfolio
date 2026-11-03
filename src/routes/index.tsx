@@ -10,7 +10,6 @@ import portrait from "@/assets/venkatesh-cutout.png";
 import aboutImg from "@/assets/about-workspace.jpg";
 import seoImg from "@/assets/seo-freelance.jpg";
 import ResultsCharts from "@/components/ResultsCharts";
-import vkLogo from "@/assets/vk_logo.png.asset.json";
 
 const EMAIL = "kuppili.venkat@gmail.com";
 const PHONE = "+918790009840";
@@ -82,11 +81,7 @@ function Header() {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all ${scrolled ? "bg-navy-deep/85 backdrop-blur-xl py-3" : "py-5"}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="flex items-center gap-3">
-          <span className="rounded-xl bg-white/95 p-1.5 shadow-lg shadow-black/20">
-            <img src={vkLogo.url} alt="VK Growth Marketing logo" className="h-7 w-auto" />
-          </span>
-        </a>
+        <a href="#top" aria-label="Back to top" className="block h-10 w-10" />
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map(([l, id], i) => (
             <a key={id} href={`#${id}`} className="group flex items-center gap-3 px-3 text-xs font-medium uppercase tracking-[0.18em] text-navy-foreground/70 transition hover:text-navy-foreground">
@@ -127,8 +122,8 @@ function Hero() {
             <span className="size-2 animate-pulse rounded-full bg-accent" /> Venkatesh Kuppili · Hyderabad
           </p>
           <h1 className="animate-rise font-heading text-[clamp(2.4rem,5.6vw,5rem)] font-extrabold uppercase leading-[0.92]" style={{ animationDelay: ".1s" }}>
-            <span className="block whitespace-nowrap pl-[10%]">Strategy that</span>
-            <span className="flex justify-between gap-4"><span>Drives</span><span className="text-brand">Growth.</span></span>
+            <span className="block">Strategy that</span>
+            <span className="block">Drives <span className="text-brand">Growth.</span></span>
           </h1>
           <p className="animate-rise mt-6 font-heading text-lg font-semibold text-navy-foreground/90 md:text-xl" style={{ animationDelay: ".2s" }}>
             Building Digital Growth Through Strategy, Performance & Innovation.
@@ -136,7 +131,7 @@ function Hero() {
           <p className="animate-rise mt-4 max-w-lg text-sm uppercase leading-relaxed tracking-wide text-navy-foreground/60" style={{ animationDelay: ".3s" }}>
             Digital Marketing Strategist · Paid Ads · SEO · AEO · GEO — 9+ years turning campaigns into measurable business results.
           </p>
-          <div className="animate-rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: ".4s" }}>
+          <div className="animate-rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: ".4s" }}>
             <Button asChild variant="hero" size="lg"><a href="#work">View My Portfolio <ArrowUpRight /></a></Button>
             <Button asChild variant="glass" size="lg"><a href="#experience">My Experience <ArrowUpRight /></a></Button>
             <Button asChild variant="ghostLight" size="lg"><a href="#contact">[ Let's Connect ]</a></Button>
@@ -241,13 +236,13 @@ function Experience() {
       <div className="relative mx-auto max-w-7xl px-6 py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead n="02" k="Experience" title="A career built on measurable results." dark />
-          <p className="reveal mb-14 max-w-sm text-navy-foreground/70">Nine years, five companies — tap a role to explore it.</p>
+          <p className="reveal mb-14 max-w-sm text-navy-foreground/70 lg:text-right">Nine years, five companies — tap a role to explore it.</p>
         </div>
         <div className="mb-8 flex gap-1 overflow-x-auto rounded-2xl glass p-1.5">
           {JOBS.map((x, i) => (
-            <button key={x.c} onClick={() => setSel(i)} className={`min-w-40 flex-1 rounded-xl px-4 py-3 text-left transition ${i === sel ? "bg-brand shadow-glow" : "hover:bg-navy-foreground/10"}`}>
+            <button key={x.c} onClick={() => setSel(i)} className={`min-w-44 flex-1 rounded-xl px-4 py-3 text-left transition ${i === sel ? "bg-brand shadow-glow" : "hover:bg-navy-foreground/10"}`}>
               <span className="block text-[11px] uppercase tracking-widest opacity-70">{x.d.split(" – ")[0]}</span>
-              <span className="block truncate font-heading text-sm font-bold">{x.c.split(" ")[0]} {x.c.split(" ")[1] ?? ""}</span>
+              <span className="block font-heading text-sm font-bold leading-snug">{x.c.split(" ")[0]} {x.c.split(" ")[1] ?? ""}</span>
             </button>
           ))}
         </div>
@@ -507,7 +502,6 @@ function Footer() {
     <footer className="border-t border-navy-foreground/10 bg-navy-deep text-navy-foreground/70">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 md:grid-cols-3">
         <div>
-          <span className="mb-3 inline-block rounded-xl bg-white/95 p-2"><img src={vkLogo.url} alt="VK Growth Marketing logo" className="h-9 w-auto" /></span>
           <p className="font-heading text-lg font-bold text-navy-foreground">Venkatesh Kuppili</p><p className="text-sm">Digital Marketing Strategist</p>
         </div>
         <nav className="flex flex-wrap gap-4 text-sm">{NAV.map(([l, id]) => <a key={id} href={`#${id}`} className="hover:text-navy-foreground">{l}</a>)}</nav>
